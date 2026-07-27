@@ -8,7 +8,8 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-#about, #member, #workflow, #transparency { scroll-margin-top: 96px; }
+#about { scroll-margin-top: 0; }
+#member, #workflow, #transparency { scroll-margin-top: 96px; }
 body {
   margin: 0;
   overflow-x: hidden;
@@ -44,6 +45,7 @@ nav a::after {
 }
 nav a:hover::after, nav a:focus-visible::after, nav a.active::after { opacity: 1; transform: scaleX(1); }
 .menu-toggle {
+  position: absolute; right: 0; top: 50%; translate: -50% -50%;
   display: none; width: 42px; height: 42px; place-items: center; gap: 5px;
   border: 1px solid rgba(244,208,138,.34); border-radius: 50%;
   background: rgba(6,19,31,.44);
@@ -142,9 +144,11 @@ h1 {
     radial-gradient(circle at 35% 18%,#a7bbce 0 2px,transparent 3px),
     radial-gradient(circle at 58% 62%,#a7bbce 0 3px,transparent 4px),
     radial-gradient(circle at 86% 30%,#a7bbce 0 2px,transparent 3px);
+  filter: drop-shadow(0 0 8px rgba(167,187,206,.18));
+  animation: constellationGlow 9.5s ease-in-out infinite;
 }
 .constellation-one { top: 120px; left: 28%; transform: rotate(10deg); }
-.constellation-two { right: 2%; bottom: 80px; transform: rotate(-18deg); }
+.constellation-two { right: 2%; bottom: 80px; transform: rotate(-18deg); animation-delay: -3.4s; animation-duration: 11s; }
 
 .section-shell { width: min(1320px,calc(100% - 64px)); margin: 0 auto; padding: 112px 0; }
 .section-heading {
@@ -165,7 +169,6 @@ h1 {
 }
 .human-card img {
   align-self: end; width: 100%; height: 100%; object-fit: cover;
-  mask-image: linear-gradient(90deg,#000 70%,transparent 100%);
 }
 .human-card-copy { position: relative; z-index: 2; padding: 30px 26px; }
 .human-card-copy p, .crew-copy > p:first-child {
@@ -196,7 +199,14 @@ h1 {
   position: relative; display: grid; height: 250px; place-items: center; overflow: hidden;
   background: radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--accent),transparent 72%),transparent 55%);
 }
-.crew-portrait img { width: 88%; height: 95%; object-fit: contain; }
+.crew-portrait img {
+  width: 88%; height: 95%; object-fit: contain;
+  transform-origin: 50% 88%; animation: crewGesture 7.2s ease-in-out infinite;
+}
+.crew-card:nth-child(2) .crew-portrait img { animation-delay: -1.3s; }
+.crew-card:nth-child(3) .crew-portrait img { animation-delay: -2.6s; }
+.crew-card:nth-child(4) .crew-portrait img { animation-delay: -3.9s; }
+.crew-card:nth-child(5) .crew-portrait img { animation-delay: -5.2s; }
 .crew-portrait > span {
   position: absolute; top: 14px; left: 14px; border: 1px solid var(--accent); border-radius: 999px;
   background: rgba(4,14,24,.62); color: var(--accent); font-size: .66rem; font-weight: 800; padding: 6px 9px;
@@ -265,17 +275,30 @@ footer small { margin: 0; color: #8497a7; font-size: .76rem; }
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -7px; }
 }
+@keyframes constellationGlow {
+  0%, 100% { opacity: .26; scale: .985; filter: drop-shadow(0 0 4px rgba(167,187,206,.12)); background-position: 0 0; }
+  21% { opacity: .43; scale: 1.018; filter: drop-shadow(0 0 14px rgba(167,187,206,.34)); background-position: 2px -1px; }
+  49% { opacity: .31; scale: .997; filter: drop-shadow(0 0 8px rgba(167,187,206,.2)); background-position: -1px 2px; }
+  73% { opacity: .5; scale: 1.026; filter: drop-shadow(0 0 18px rgba(244,208,138,.24)); background-position: 1px 1px; }
+}
+@keyframes crewGesture {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  28% { transform: translateY(-3px) rotate(-1.1deg); }
+  54% { transform: translateY(1px) rotate(.8deg); }
+  76% { transform: translateY(-2px) rotate(.4deg); }
+}
 @media (max-width: 1120px) {
   .hero { grid-template-columns: 1fr; padding-top: 150px; }
   .hero-orbit { min-height: 420px; }
   .member-grid { grid-template-columns: 1fr; }
-  .human-card { min-height: 360px; grid-template-columns: 34% 66%; }
+  .human-card { min-height: 360px; }
   .crew-grid { grid-template-columns: repeat(2,1fr); }
   .crew-card:last-child { grid-column: span 2; }
   .crew-description { min-height: auto; }
 }
 @media (max-width: 760px) {
-  #about, #member, #workflow, #transparency { scroll-margin-top: 78px; }
+  #about { scroll-margin-top: 0; }
+  #member, #workflow, #transparency { scroll-margin-top: 78px; }
   .site-header { padding: 22px 18px; }
   .brand { font-size: 1.15rem; }
   .menu-toggle { display: grid; }
@@ -283,14 +306,21 @@ footer small { margin: 0; color: #8497a7; font-size: .76rem; }
     position: absolute; top: calc(100% + 8px); right: 18px;
     display: grid; width: min(220px, calc(100vw - 36px)); gap: 0;
     overflow: hidden; border: 1px solid rgba(244,208,138,.24); border-radius: 18px;
-    background: rgba(6,19,31,.92); box-shadow: 0 18px 34px rgba(0,0,0,.28);
+    background: rgba(6,19,31,.72); box-shadow: 0 18px 34px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.08);
     backdrop-filter: blur(14px);
     opacity: 0; pointer-events: none; transform: translateY(-8px);
     transition: opacity .18s ease, transform .18s ease;
   }
   .site-header.nav-open nav { opacity: 1; pointer-events: auto; transform: translateY(0); }
-  nav a { display: block; padding: 15px 18px; }
+  nav a {
+    display: block; padding: 15px 18px;
+    background: rgba(255,255,255,.035); color: rgba(215,222,229,.72);
+    transition: color .18s ease, background .18s ease;
+  }
+  nav a + a { border-top: 1px solid rgba(255,255,255,.06); }
+  nav a::after { right: 18px; bottom: 8px; left: 18px; }
   nav a.active { display: block; }
+  nav a:hover, nav a:focus-visible, nav a.active { background: rgba(244,208,138,.16); color: var(--paper); }
   .hero { min-height: auto; grid-template-columns: 1fr; gap: 20px; padding: 120px 20px 70px; }
   h1 { font-size: clamp(2.55rem,11vw,4rem); }
   .hero-description { font-size: .85rem; }

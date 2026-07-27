@@ -71,7 +71,7 @@
             <div class="human-card-copy">
               <p>강사 · 연구자</p>
               <h3>온다</h3>
-              <span>현장의 문제를 발견하고, 배움이 실제 역량으로 이어지는 방법을 연구합니다.</span>
+              <span>현장의 문제를 발견하고,<br />배움이 실제 역량으로 이어지는 방법을 연구합니다.</span>
             </div>
           </article>
           <article class="human-card">
@@ -79,7 +79,7 @@
             <div class="human-card-copy">
               <p>작가 · 기록자</p>
               <h3>온결</h3>
-              <span>경험과 감정을 기록하고, 사람의 언어로 연결되는 이야기를 만듭니다.</span>
+              <span>경험과 감정을 기록하고,<br />사람의 언어로 연결되는 이야기를 만듭니다.</span>
             </div>
           </article>
           <article class="human-card">
@@ -87,7 +87,7 @@
             <div class="human-card-copy">
               <p>1인기업가 · 기획자</p>
               <h3>백일몽</h3>
-              <span>아이디어를 서비스와 수익 구조로 전환하며 ON:DA.LAB의 미래를 설계합니다.</span>
+              <span>아이디어를 서비스와 수익 구조로 전환하며<br />ON:DA.LAB의 미래를 설계합니다.</span>
             </div>
           </article>
         </div>
@@ -247,7 +247,7 @@
         const target = document.querySelector(hash);
         if (!target) return;
 
-        const top = window.scrollY + target.getBoundingClientRect().top - siteHeader.offsetHeight - 24;
+        const top = hash === "#about" ? 0 : window.scrollY + target.getBoundingClientRect().top - siteHeader.offsetHeight - 24;
         window.scrollTo({ top, behavior: "smooth" });
         if (pushState) history.pushState(null, "", hash);
         window.setTimeout(updateScrollState, 320);
