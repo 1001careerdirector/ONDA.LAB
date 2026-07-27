@@ -56,7 +56,7 @@ h1 {
 }
 .hero-description {
   max-width: 620px; margin-bottom: 34px; color: #b7c3cf;
-  font-size: 1.08rem; line-height: 1.82; word-break: keep-all;
+  font-size: 1rem; line-height: 1.82; word-break: keep-all;
 }
 .primary-button {
   display: inline-flex; align-items: center; gap: 24px; padding: 15px 22px;
@@ -230,7 +230,7 @@ footer p { text-align: center; }
   nav a { display: none; }
   nav a.active { display: block; }
   .hero { min-height: auto; grid-template-columns: 1fr; gap: 20px; padding: 120px 20px 70px; }
-  h1 { font-size: clamp(2.55rem,12vw,4rem); }
+  h1 { font-size: clamp(2.55rem,11vw,4rem); }
   .hero-orbit { min-height: 350px; transform: scale(.82); }
   .orbit-b { width: 490px; }
   .section-shell { width: calc(100% - 40px); padding: 78px 0; }
