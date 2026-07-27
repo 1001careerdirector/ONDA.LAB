@@ -142,10 +142,10 @@ h1 {
 .section-heading > p, .transparency-intro > p {
   margin-bottom: 0; color: #aebbc6; line-height: 1.8; word-break: keep-all;
 }
-.crew-lead { text-align: right; }
+.member-lead, .crew-lead { text-align: right; }
 .member-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
 .human-card {
-  display: grid; min-height: 440px; grid-template-columns: 48% 52%; align-items: center;
+  display: grid; min-height: 440px; align-items: center;
   overflow: hidden; border: 1px solid rgba(244,208,138,.24); border-radius: 26px;
   background: linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
 }
@@ -153,7 +153,7 @@ h1 {
   align-self: end; width: 100%; height: 100%; object-fit: cover;
   mask-image: linear-gradient(90deg,#000 70%,transparent 100%);
 }
-.human-card-copy { position: relative; z-index: 2; padding: 30px 26px 30px 4px; }
+.human-card-copy { position: relative; z-index: 2; padding: 30px 26px; }
 .human-card-copy p, .crew-copy > p:first-child {
   margin-bottom: 7px; color: var(--cream); font-size: .75rem; font-weight: 700;
 }
@@ -271,7 +271,7 @@ footer small { margin: 0; color: #8497a7; font-size: .76rem; }
   .orbit-b { width: 490px; }
   .section-shell { width: calc(100% - 40px); padding: 78px 0; }
   .section-heading, .transparency-section { grid-template-columns: 1fr; gap: 24px; }
-  .human-card { min-height: 410px; grid-template-columns: 48% 52%; }
+  .human-card { min-height: 410px; }
   .workflow, .crew-grid { grid-template-columns: 1fr; }
   .workflow-step { min-height: 58px; border-right: 0; border-bottom: 1px solid var(--line); }
   .workflow-step i { right: 18px; transform: rotate(90deg); }
