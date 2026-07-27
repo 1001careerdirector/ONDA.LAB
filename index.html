@@ -239,10 +239,31 @@
         updateActiveNav();
       };
 
+      const scrollToTarget = (hash, pushState = true) => {
+        const target = document.querySelector(hash);
+        if (!target) return;
+
+        const top = window.scrollY + target.getBoundingClientRect().top - siteHeader.offsetHeight - 24;
+        window.scrollTo({ top, behavior: "smooth" });
+        if (pushState) history.pushState(null, "", hash);
+        window.setTimeout(updateScrollState, 320);
+      };
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          scrollToTarget(link.getAttribute("href"));
+        });
+      });
+
       updateScrollState();
       window.addEventListener("scroll", updateScrollState, { passive: true });
       window.addEventListener("resize", updateScrollState);
       window.addEventListener("hashchange", updateScrollState);
+
+      if (window.location.hash) {
+        requestAnimationFrame(() => scrollToTarget(window.location.hash, false));
+      }
 
       heroOrbit.addEventListener("pointermove", (event) => {
         const rect = heroOrbit.getBoundingClientRect();
