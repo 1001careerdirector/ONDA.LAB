@@ -13,6 +13,9 @@
   <body>
     <header class="site-header">
       <a class="brand" href="#top" aria-label="ON:DA.LAB 처음으로">ON<span>:</span>DA.LAB</a>
+      <button class="menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
       <nav aria-label="주요 메뉴">
         <a class="active" href="#about">ABOUT</a>
         <a href="#member">MEMBER</a>
@@ -210,6 +213,7 @@
       const siteHeader = document.querySelector(".site-header");
       const topButton = document.querySelector(".top-button");
       const heroOrbit = document.querySelector(".hero-orbit");
+      const menuToggle = document.querySelector(".menu-toggle");
       const navLinks = Array.from(document.querySelectorAll(".site-header nav a"));
       const navItems = navLinks
         .map((link) => ({ link, target: document.querySelector(link.getAttribute("href")) }))
@@ -249,16 +253,31 @@
         window.setTimeout(updateScrollState, 320);
       };
 
+      const closeMenu = () => {
+        siteHeader.classList.remove("nav-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      };
+
+      menuToggle.addEventListener("click", () => {
+        const expanded = menuToggle.getAttribute("aria-expanded") === "true";
+        siteHeader.classList.toggle("nav-open", !expanded);
+        menuToggle.setAttribute("aria-expanded", String(!expanded));
+      });
+
       navLinks.forEach((link) => {
         link.addEventListener("click", (event) => {
           event.preventDefault();
+          closeMenu();
           scrollToTarget(link.getAttribute("href"));
         });
       });
 
       updateScrollState();
       window.addEventListener("scroll", updateScrollState, { passive: true });
-      window.addEventListener("resize", updateScrollState);
+      window.addEventListener("resize", () => {
+        closeMenu();
+        updateScrollState();
+      });
       window.addEventListener("hashchange", updateScrollState);
 
       if (window.location.hash) {
