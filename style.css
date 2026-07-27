@@ -8,6 +8,7 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+#about, #member, #workflow, #transparency { scroll-margin-top: 96px; }
 body {
   margin: 0;
   overflow-x: hidden;
@@ -261,6 +262,7 @@ footer small { margin: 0; color: #8497a7; font-size: .76rem; }
   .crew-description { min-height: auto; }
 }
 @media (max-width: 760px) {
+  #about, #member, #workflow, #transparency { scroll-margin-top: 78px; }
   .site-header { padding: 22px 18px; }
   .brand { font-size: 1.15rem; }
   nav a { display: none; }

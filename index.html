@@ -14,9 +14,9 @@
     <header class="site-header">
       <a class="brand" href="#top" aria-label="ON:DA.LAB 처음으로">ON<span>:</span>DA.LAB</a>
       <nav aria-label="주요 메뉴">
-        <a href="#about">ABOUT</a>
-        <a class="active" href="#member">MEMBER</a>
-        <a href="#workflow">WORKFLOW</a>
+        <a class="active" href="#about">ABOUT</a>
+        <a href="#member">MEMBER</a>
+        <a href="#workflow">AI CREW</a>
         <a href="#transparency">TRANSPARENCY</a>
       </nav>
     </header>
@@ -210,15 +210,39 @@
       const siteHeader = document.querySelector(".site-header");
       const topButton = document.querySelector(".top-button");
       const heroOrbit = document.querySelector(".hero-orbit");
+      const navLinks = Array.from(document.querySelectorAll(".site-header nav a"));
+      const navItems = navLinks
+        .map((link) => ({ link, target: document.querySelector(link.getAttribute("href")) }))
+        .filter((item) => item.target);
+
+      const updateActiveNav = () => {
+        const headerOffset = siteHeader.offsetHeight + 64;
+        let currentItem = navItems[0];
+
+        navItems.forEach((item) => {
+          if (item.target.getBoundingClientRect().top <= headerOffset) {
+            currentItem = item;
+          }
+        });
+
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+          currentItem = navItems[navItems.length - 1];
+        }
+
+        navLinks.forEach((link) => link.classList.toggle("active", link === currentItem.link));
+      };
 
       const updateScrollState = () => {
         const scrolled = window.scrollY > 16;
         siteHeader.classList.toggle("is-scrolled", scrolled);
         topButton.classList.toggle("is-visible", scrolled);
+        updateActiveNav();
       };
 
       updateScrollState();
       window.addEventListener("scroll", updateScrollState, { passive: true });
+      window.addEventListener("resize", updateScrollState);
+      window.addEventListener("hashchange", updateScrollState);
 
       heroOrbit.addEventListener("pointermove", (event) => {
         const rect = heroOrbit.getBoundingClientRect();
