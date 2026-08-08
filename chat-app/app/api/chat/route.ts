@@ -3,8 +3,6 @@ import { auth } from "@/auth";
 import { isPersona, PERSONAS } from "@/lib/personas";
 import { loadMessages, saveMessage } from "@/lib/db";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 function getUserKey(session: Awaited<ReturnType<typeof auth>>) {
   const user = session?.user as (typeof session.user & { id?: string }) | undefined;
   return user?.email || user?.id || null;
@@ -27,6 +25,7 @@ export async function POST(request: Request) {
   const session = await auth();
   const userKey = getUserKey(session);
   if (!userKey) return Response.json({ error: "unauthorized" }, { status: 401 });
+  if (!process.env.OPENAI_API_KEY) return Response.json({ error: "OPENAI_API_KEY is not configured" }, { status: 503 });
 
   const body = await request.json();
   const persona = String(body.persona || "");
@@ -36,6 +35,7 @@ export async function POST(request: Request) {
 
   await saveMessage(userKey, persona, "user", message);
   const history = await loadMessages(userKey, persona, 24);
+  const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
   const response = await client.responses.create({
     model: process.env.OPENAI_MODEL || "gpt-5",
