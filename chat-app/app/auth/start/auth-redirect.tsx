@@ -7,7 +7,7 @@ export default function AuthRedirect({ provider, persona }: { provider: string; 
   const [status, setStatus] = useState("로그인 화면으로 이동 중입니다…");
 
   useEffect(() => {
-    signIn(provider, { callbackUrl: `/chat?persona=${persona}` }).catch(() => {
+    signIn(provider, { redirectTo: `/chat?persona=${persona}` }).catch(() => {
       setStatus("로그인 연결에 실패했습니다. 다시 시도해 주세요.");
     });
   }, [provider, persona]);
